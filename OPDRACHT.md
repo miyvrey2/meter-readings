@@ -8,9 +8,7 @@ hiervoor het volgende endpoint:
 ```POST /api/connections/{ean}/readings```
 ```{"timestamp":"2026-02-01T03:45:00+00:00","kwh_total":12345}```
 Deze data moet worden gevalideerd en opgeslagen in de meter_readings tabel. 
-- Wanneer de
-laatste meterstand van de dag is opgeslagen, moeten de kosten van die dag worden
-gecalculeerd op basis van het contract van de klant. Deze kosten slaan we op in de daily_costs
+- Wanneer de laatste meterstand van de dag is opgeslagen, moeten de kosten van die dag worden gecalculeerd op basis van het contract van de klant. Deze kosten slaan we op in de daily_costs
 tabel.
 - Wanneer het weekverbruik meer dan 10% afwijkt van het verbruik van de voorgaande week
 sturen we de klant een notificatie
