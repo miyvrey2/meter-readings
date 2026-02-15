@@ -17,3 +17,11 @@ De reden dat ik geen aparte contract en user tabel opstel is om de opdracht niet
 - `php artisan make:model Ean -mf`
 - `php artisan make:model MeterReadings -mf`
 - `php artisan make:model DailyCosts -mf`
+
+## Stap 2: Maak seeders
+
+De relaties heb ik nu gelegd en de factories zijn aangemaakt. Tijdens het migreren worden alle tabellen en relaties aangemaakt.
+
+--
+
+Deze stap duurde langer dan ik had verwacht, maar de seeders zijn nu naar mijn zin om ook als data te kunnen gebruiken voor de opdracht
