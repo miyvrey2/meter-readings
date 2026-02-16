@@ -18,5 +18,7 @@ class ConnectionsController extends Controller
             'kwh_total' => $data['kwh_total'],
             'timestamp' => $data['timestamp'],
         ]);
+
+
     }
 }

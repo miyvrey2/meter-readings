@@ -34,3 +34,7 @@ De api heeft op dit moment een 'connections' segment dat verwijst naar de EAN, e
 - `php artisan make:request StoreConnectionsReadingsRequest`
 
 De validatie is eigenlijk enkel conform wat ik weet van hoe deze data eruit moet zien. De timezone was even een double check maar gezien mijn database de timezone van mn laptop aanhoud ziet dat er ook goed uit.
+
+## Stap 4: Maak een event dat de kosten van de dag opmaakt
+Ik heb getwijfeld om, als elke keer de metingen worden opgeslagen, te checken of we ook de kosten wilden berekenen. Dit lijkt mij echter onveilig als data niet goed wordt doorgegeven. Daarom laat ik een cron draaien om dit af te vangen. Voor nu simuleer ik dat met een commando.
+Kleine rekenfout met de seeders, maar nu opgelost met de kosten berekening. Het commando `php artisan app:calculate-daily-costs` berekent de prijs d.m.v. de eerste en laatste timestamp van de dag en daar het verschil van te noteren. Dit keer de prijs van de kwh in de ean tabel (omdat we geen contract hebben) maakt de juiste prijs.

@@ -27,10 +27,10 @@ class DatabaseSeeder extends Seeder
 
             // Create meter_readings for a day, add in sequence (15 min) kwh and update timestamp
             MeterReadings::factory()
-                 ->count(24 * 15)
+                 ->count(24 * 4)
                  ->sequence(function (Sequence $sequence) use ($kwh_total, $kwh_increase) {
                         return [
-                            'kwh_total' => ($kwh_total + $sequence->index * ($kwh_increase / (24 * 15))),
+                            'kwh_total' => ($kwh_total + $sequence->index * ($kwh_increase / (24 * 4))),
                             'timestamp' => now()->startOfDay()->addMinutes($sequence->index * 15)
                         ];
                  })
@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
                 [
                     'timestamp' => now()->endOfDay(),
                     'kwh_used' => $kwh_increase,
+                    'cost_in_euro' => $ean->cost_per_kwh_in_euro * $kwh_increase,
                 ]
             );
         }

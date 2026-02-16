@@ -15,7 +15,9 @@ class DailyCosts extends Model
 
     protected $fillable = [
         'ean_code',
-        'kwh_used'
+        'kwh_used',
+        'cost_in_euro',
+        'timestamp',
     ];
 
     public function ean(): BelongsTo
