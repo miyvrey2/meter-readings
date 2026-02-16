@@ -25,3 +25,12 @@ De relaties heb ik nu gelegd en de factories zijn aangemaakt. Tijdens het migrer
 --
 
 Deze stap duurde langer dan ik had verwacht, maar de seeders zijn nu naar mijn zin om ook als data te kunnen gebruiken voor de opdracht
+
+## Stap 3: maak een API endpoint
+Quick note: ik wilde gebruik maken van `php artisan install:api`, maar gezien er geen andere packages zijn toegestaan focus ik mij nu enkel op de route/controller/method en niet de authenticatie.
+Het routes/api.php bestand aangemaakt en deze verzorgt dat ik stateless de api kan aanroepen.
+De api heeft op dit moment een 'connections' segment dat verwijst naar de EAN, en daarin een readings method om deze te kunnen opslaan. Gezien we dit eenmalig doen en niet wijzigen is dit een POST. Ook willen we de input valideren, dit doen we in het StoreConnectionsReadingsRequest
+- `php artisan make:controller ConnectionsController`
+- `php artisan make:request StoreConnectionsReadingsRequest`
+
+De validatie is eigenlijk enkel conform wat ik weet van hoe deze data eruit moet zien. De timezone was even een double check maar gezien mijn database de timezone van mn laptop aanhoud ziet dat er ook goed uit.

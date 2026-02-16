@@ -15,7 +15,8 @@ class MeterReadings extends Model
 
     protected $fillable = [
         'ean_code',
-        'kwh_total'
+        'kwh_total',
+        'timestamp',
     ];
 
     public function ean(): BelongsTo
