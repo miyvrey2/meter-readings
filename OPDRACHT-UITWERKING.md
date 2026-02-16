@@ -39,3 +39,5 @@ De validatie is eigenlijk enkel conform wat ik weet van hoe deze data eruit moet
 Ik heb getwijfeld om, als elke keer de metingen worden opgeslagen, te checken of we ook de kosten wilden berekenen. Dit lijkt mij echter onveilig als data niet goed wordt doorgegeven. Daarom laat ik een cron draaien om dit af te vangen. Voor nu simuleer ik dat met een commando.
 Kleine rekenfout met de seeders, maar nu opgelost met de kosten berekening. Het commando `php artisan app:calculate-daily-costs` berekent de prijs d.m.v. de eerste en laatste timestamp van de dag en daar het verschil van te noteren. Dit keer de prijs van de kwh in de ean tabel (omdat we geen contract hebben) maakt de juiste prijs.
 Voor nu is het een commando in de cron aangezet. Een schonere manier is om dit in een event te zetten of op een later tijdstip dan vandaag (bijv. 1 of 2 uur later) het bedrag te berekenen, zodat alle data zeker binnen is.
+
+## Stap 5: Maak een event dat een notificatie maakt bij afwijkend (10%) verbruik

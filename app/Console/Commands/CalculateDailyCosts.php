@@ -26,19 +26,22 @@ class CalculateDailyCosts extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $eans = Ean::all();
 
         foreach ($eans as $ean) {
+
             // find all meter-readings of today
             $readings = $ean->meterReadings()
                             ->whereBetween('timestamp', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])
                             ->orderBy('timestamp')
                             ->get();
 
-            $kwh_used = (float) $readings->last()->kwh_total - (float) $readings->first()->kwh_total;
+            // Subtract the begin kwh of the end to get the kwh_used
+            $kwh_used = ((float) $readings->last()->kwh_total - (float) $readings->first()->kwh_total) ?? 0.0;
 
+            // Store the dailyCost into the database
             DailyCosts::create([
                 'ean_code' => $ean->code,
                 'kwh_used' => $kwh_used,

@@ -20,17 +20,19 @@ class DatabaseSeeder extends Seeder
     {
         $eans = Ean::factory(10)->create();
 
+        $amount_of_days = 14;
+
         foreach ($eans as $ean) {
             // Set a base for the current kwh
             $kwh_total = fake()->randomFloat(2, 1000, 2000);
-            $kwh_increase = fake()->numberBetween(5,30);
+            $kwh_increase = fake()->numberBetween(5,30) * $amount_of_days;
 
             // Create meter_readings for a day, add in sequence (15 min) kwh and update timestamp
             MeterReadings::factory()
-                 ->count(24 * 4)
-                 ->sequence(function (Sequence $sequence) use ($kwh_total, $kwh_increase) {
+                 ->count($amount_of_days * 24 * 4)
+                 ->sequence(function (Sequence $sequence) use ($kwh_total, $kwh_increase, $amount_of_days) {
                         return [
-                            'kwh_total' => ($kwh_total + $sequence->index * ($kwh_increase / (24 * 4))),
+                            'kwh_total' => ($kwh_total + $sequence->index * ($kwh_increase / ($amount_of_days * 24 * 4))),
                             'timestamp' => now()->startOfDay()->addMinutes($sequence->index * 15)
                         ];
                  })
