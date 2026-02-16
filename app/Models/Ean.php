@@ -30,4 +30,9 @@ class Ean extends Model
     {
         return $this->hasMany(MeterReadings::class, 'ean_code', 'code');
     }
+
+    public function dailyCosts(): HasMany
+    {
+        return $this->hasMany(DailyCosts::class, 'ean_code', 'code');
+    }
 }
