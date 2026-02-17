@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Ean;
+use App\Models\Connection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +18,7 @@ class MeterReadingsFactory extends Factory
     public function definition(): array
     {
         return [
-            'ean_code' => Ean::factory(),
+            'ean_code' => Connection::factory(),
             'kwh_total' => $this->faker->randomFloat(2, 1000, 2000)
         ];
     }

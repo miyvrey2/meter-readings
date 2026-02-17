@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreConnectionsReadingsRequest;
-use App\Models\Ean;
+use App\Models\Connection;
 use App\Models\MeterReadings;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class ConnectionsController extends Controller
+class ConnectionReadingController extends Controller
 {
-    public function readings(StoreConnectionsReadingsRequest $request, Ean $ean): jsonResponse
+    public function store(StoreConnectionsReadingsRequest $request, Connection $connection): jsonResponse
     {
         $data = $request->validated();
 
         $meterReadings = MeterReadings::create([
-            'ean_code' => $ean->code,
+            'ean_code' => $connection->ean_code,
             'kwh_total' => $data['kwh_total'],
             'timestamp' => $data['timestamp'],
         ]);

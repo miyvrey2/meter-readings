@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Ean extends Model
+class Connection extends Model
 {
-    /** @use HasFactory<\Database\Factories\EanFactory> */
+    /** @use HasFactory<\Database\Factories\ConnectionFactory> */
     use HasFactory;
 
-    protected $primaryKey = 'code';
+    protected $primaryKey = 'ean_code';
     public $incrementing = false;
     protected $keyType = 'string';
 
@@ -28,11 +28,11 @@ class Ean extends Model
 
     public function meterReadings(): HasMany
     {
-        return $this->hasMany(MeterReadings::class, 'ean_code', 'code');
+        return $this->hasMany(MeterReadings::class, 'ean_code', 'ean_code');
     }
 
     public function dailyCosts(): HasMany
     {
-        return $this->hasMany(DailyCosts::class, 'ean_code', 'code');
+        return $this->hasMany(DailyCosts::class, 'ean_code', 'ean_code');
     }
 }

@@ -20,8 +20,8 @@ class DailyCosts extends Model
         'timestamp',
     ];
 
-    public function ean(): BelongsTo
+    public function connection(): BelongsTo
     {
-        return $this->belongsTo(Ean::class, 'ean_code', 'code');
+        return $this->belongsTo(Connection::class, 'ean_code', 'ean_code');
     }
 }

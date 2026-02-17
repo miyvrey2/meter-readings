@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ean>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Connection>
  */
-class EanFactory extends Factory
+class ConnectionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class EanFactory extends Factory
     {
         return [
 
-            'code' => "871" . $this->faker->unique()->numerify('###############'),
+            'ean_code' => "871" . $this->faker->unique()->numerify('###############'),
             'street' => $this->faker->streetName(),
             'house_number' => $this->faker->buildingNumber(),
             'house_number_addition' => $this->faker->buildingNumber(),
