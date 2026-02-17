@@ -2,9 +2,8 @@
 
 namespace App\Notifications;
 
-use App\Models\Ean;
+use App\Models\Connection;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -16,7 +15,7 @@ class WeekConsumptionChanged extends Notification
      * Create a new notification instance.
      */
     public function __construct(
-        public Ean $ean
+        public Connection $connectionModel
     ) { }
 
     /**
@@ -35,7 +34,7 @@ class WeekConsumptionChanged extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('There has been a drastic change in your weekly consumption for EAN code: ' . $this->ean->code . '.')
+            ->line('There has been a drastic change in your weekly consumption for EAN code: ' . $this->connectionModel->ean_code . '.')
             ->action('Check your usage now', url('/'))
             ->line('Thank you for using our application!');
     }

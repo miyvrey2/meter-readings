@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Ean;
+use App\Models\Connection;
 use App\Models\User;
 use App\Notifications\WeekConsumptionChanged;
 use Carbon\Carbon;
@@ -43,14 +43,14 @@ class MonitorWeeklyConsumption extends Command
         $startOfPrevWeek = $startOfWeek->copy()->subWeek();
         $endOfPrevWeek = $endOfWeek->copy()->subWeek();
 
-        $eans = Ean::all();
+        $connections = Connection::with('meterReadings')->get();
 
-        foreach ($eans as $ean) {
-            $WeekTotal = $ean->dailyCosts()
+        foreach ($connections as $connection) {
+            $WeekTotal = $connection->dailyCosts()
                                  ->whereBetween('timestamp', [$startOfWeek, $endOfWeek])
                                  ->sum('kwh_used');
 
-            $prevWeekTotal = $ean->dailyCosts()
+            $prevWeekTotal = $connection->dailyCosts()
                                  ->whereBetween('timestamp', [$startOfPrevWeek, $endOfPrevWeek])
                                  ->sum('kwh_used');
 
@@ -63,7 +63,7 @@ class MonitorWeeklyConsumption extends Command
                     // Since there is no implementation for users and ean yet, get the testUser
                     $user = User::find(1)->first();
 
-                    Notification::send($user, new WeekConsumptionChanged($ean));
+                    Notification::send($user, new WeekConsumptionChanged($connection));
                 }
             }
         }

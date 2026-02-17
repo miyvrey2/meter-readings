@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\DailyCosts;
-use App\Models\Ean;
+use App\Models\Connection;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -28,24 +28,23 @@ class CalculateDailyCosts extends Command
      */
     public function handle(): void
     {
-        $eans = Ean::all();
+        $connections = Connection::with('meterReadings')->get();
 
-        foreach ($eans as $ean) {
+        foreach ($connections as $connection) {
 
             // find all meter-readings of today
-            $readings = $ean->meterReadings()
-                            ->whereBetween('timestamp', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])
-                            ->orderBy('timestamp')
+            $readings = $connection->meterReadings()
+                            ->whereDate('timestamp', Carbon::now())
                             ->get();
 
-            // Subtract the begin kwh of the end to get the kwh_used
+            // Subtract the first kwh reading record of the last to get the kwh_used
             $kwh_used = ((float) $readings->last()->kwh_total - (float) $readings->first()->kwh_total) ?? 0.0;
 
             // Store the dailyCost into the database
             DailyCosts::create([
-                'ean_code' => $ean->code,
+                'ean_code' => $connection->ean_code,
                 'kwh_used' => $kwh_used,
-                'cost_in_euro' => $ean->cost_per_kwh_in_euro * $kwh_used,
+                'cost_in_euro' => $connection->cost_per_kwh_in_euro * $kwh_used,
                 'timestamp' => Carbon::now()->startOfDay(),
             ]);
         }

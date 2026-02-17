@@ -16,7 +16,7 @@ class Connection extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'code',
+        'ean_code',
         'street',
         'house_number',
         'house_number_addition',
