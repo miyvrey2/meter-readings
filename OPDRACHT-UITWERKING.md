@@ -45,3 +45,17 @@ Kleine fix: Imported Schedule voor console.php
 - Dit kan het beste door de seeders aan te passen en meer data te laten genereren. Ik maak het zo dat we van de laatste 28 dagen meter_readings en daily_costs hebben voor 10 EAN's. Ook verhoog ik hier de kwh waardes met 15% per week.
 - Met het commando `php artisan app:monitor-weekly-consumption` wil ik wekelijks kijken of er van de 2 volle afgelopen weken een verandering van 10% of meer heeft plaatsgevonden.
 - Indien het geval (wat altijd zo is) wordt de Laravel Notification aangeroepen die de test user een notificatie mailt. Omdat er nog geen relatie is tussen ean en notifable entities heb ik voor nu gekozen om dit met de (test) User te doen.
+
+## Uitwerkingen en verbeteringen
+- Ga uit van duizenden EAN's
+  - Zorg voor meer data in de seeder;
+  - Houd rekening met verwerking van datasets d.m.v. chunks en jobs;
+- Think the Laravel way:
+  - ConnectionsController zou beter ConnectionReadingController gezien readings [genest](https://laravel.com/docs/12.x/controllers#restful-nested-resources) zitten in de connection;
+  - readings zou dan ook beter 'store' kunnen zijn, om de CRUD methodiek van Laravel aan te houden
+  - Gebruik bij Relationships 'with' om N+1 probleem te voorkomen
+  - Controleer bij Eloquent gebruik of je echt de beste methods hanteert
+    - whereBetween is bij de commando's vrij zwaar en onspecifiek, er is ook whereDate
+    - orderBy heeft bij de commando's geen effect
+    - create() hoeft geen created instance terug te geven
+- Ean als model en Connection (in controller) is a. inconsistent en b. geen goede naamgeving. Connection(s) is hier meer passend dan 'id' of 'barcode' 
