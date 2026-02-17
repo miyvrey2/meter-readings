@@ -1,5 +1,5 @@
 # meter-readings
-A simple application built with Laravel, designed to store and calculate gas consuming and prices. Build as requested in the assignment file [OPDRACHT.md](OPDRACHT.md). Thoughts and considerations are documented in the assignment elaboration file [OPDRACHT-UITWERKING.md](OPDRACHT-UITWERKING.md).
+A simple application built with Laravel, designed to store, calculate prices and monitoring kwh consumings. Build as requested in the assignment file [OPDRACHT.md](OPDRACHT.md). Thoughts and considerations are documented in the assignment elaboration file [OPDRACHT-UITWERKING.md](OPDRACHT-UITWERKING.md).
 
 ## Installation
 1. Clone the repository:
@@ -16,10 +16,11 @@ A simple application built with Laravel, designed to store and calculate gas con
    ```php artisan migrate --seed```
 
 ## Usage
-1. Inserting via API
-   ```POST /api/connections/{ean}/readings```
-   ```{"timestamp":"2026-02-01T03:45:00+00:00","kwh_total":12345}```
-2. Calculate the daily costs 
+1. Inserting via API via HTTP POST method with the following data to: /api/connections/{ean}/readings 
+   ```
+   {"timestamp":"2026-02-01T03:45:00+00:00","kwh_total":12345}
+   ```
+2. Calculate the daily costs via the command:
    `php artisan app:calculate-daily-costs`
-3. Monitor differences in week consumptions and notify
+3. Monitor differences in week consumptions and notify via the command:
    `app:monitor-weekly-consumption`
