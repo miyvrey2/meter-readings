@@ -4,10 +4,11 @@ namespace App\Notifications;
 
 use App\Models\Connection;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class WeekConsumptionChanged extends Notification
+class WeekConsumptionChanged extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -26,6 +27,18 @@ class WeekConsumptionChanged extends Notification
     public function via(object $notifiable): array
     {
         return ['mail'];
+    }
+
+    /**
+     * Determine which queues should be used for each notification channel.
+     *
+     * @return array<string, string>
+     */
+    public function viaQueues(): array
+    {
+        return [
+            'mail' => 'mail-queue',
+        ];
     }
 
     /**

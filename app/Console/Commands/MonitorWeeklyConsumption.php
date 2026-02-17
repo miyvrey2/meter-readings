@@ -43,27 +43,26 @@ class MonitorWeeklyConsumption extends Command
         $startOfPrevWeek = $startOfWeek->copy()->subWeek();
         $endOfPrevWeek = $endOfWeek->copy()->subWeek();
 
-        $connections = Connection::with('meterReadings')->get();
+        // Demo purpose only
+        $user = User::find(1)->first();
+
+        $connections = Connection::with('dailyCosts')->get();
 
         foreach ($connections as $connection) {
-            $WeekTotal = $connection->dailyCosts()
+            $WeekTotal = $connection->dailyCosts
                                  ->whereBetween('timestamp', [$startOfWeek, $endOfWeek])
                                  ->sum('kwh_used');
 
-            $prevWeekTotal = $connection->dailyCosts()
+            $prevWeekTotal = $connection->dailyCosts
                                  ->whereBetween('timestamp', [$startOfPrevWeek, $endOfPrevWeek])
                                  ->sum('kwh_used');
 
             if($prevWeekTotal > 0) {
                 $diffInPercentages = (($WeekTotal - $prevWeekTotal) / $prevWeekTotal) * 100;
 
-                // when the difference is to great, notify the user
+                // when the difference is too great, notify the user
                 if($diffInPercentages > $this->differ) {
-
-                    // Since there is no implementation for users and ean yet, get the testUser
-                    $user = User::find(1)->first();
-
-                    Notification::send($user, new WeekConsumptionChanged($connection));
+                    Notification::send($user, new WeekConsumptionChanged($connection->withoutRelations()));
                 }
             }
         }
